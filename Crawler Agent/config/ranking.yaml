@@ -1,0 +1,188 @@
+inputs:
+  search_criteria: "config/search-criteria.yaml"
+  candidate_cv: "config/CV.md"
+  company_targets: "config/company-targets.yaml"
+  
+evaluation_order:
+  - Apply the search criteria
+  - Reject jobs that violate a hard filter
+  - Compare the remaining jobs against the CV
+  - Calculate the candidate-fit score
+  - Assign a confidence level
+  - Sort eligible jobs by score
+
+eligibility:
+  apply_search_criteria_first: true
+  rank_only_eligible_jobs: true
+  hard_filter_violation_status: "Ineligible"
+  score_ineligible_jobs: false
+  record_rejection_reason: true
+
+scoring:
+  minimum_score: 0
+  maximum_score: 100
+  round_final_score_to_integer: true
+
+  categories:
+    required_skills_and_qualifications:
+      points: 30
+      method: "Split the available points equally across all explicit mandatory requirements."
+      evaluate:
+        - Required technical skills
+        - Required tools and technologies
+        - Required qualifications
+        - Mandatory language requirements
+        - Other explicit must-have conditions
+
+    relevant_cv_experience_and_projects:
+      points: 25
+      method: "Evaluate the relevance and strength of concrete evidence found in the CV."
+      anchors:
+        direct_and_substantial: 25
+        strong_transferable_experience: 19
+        some_relevant_experience: 13
+        weak_or_indirect_evidence: 6
+        no_relevant_evidence: 0
+
+    role_and_domain_alignment:
+      points: 15
+      method: "Compare the role's main responsibilities and technical domain with the candidate's demonstrated background."
+      anchors:
+        direct_alignment: 15
+        closely_adjacent_domain: 11
+        broadly_related_it_domain: 7
+        weak_alignment: 3
+        unrelated: 0
+
+    experience_level_and_education_fit:
+      points: 10
+      method: "Evaluate requested experience, seniority and education against the CV and search criteria."
+      anchors:
+        fully_aligned: 10
+        small_gap: 7
+        meaningful_but_possible_gap: 4
+        major_gap: 0
+
+    location_work_arrangement_and_authorization:
+      points: 10
+      method: "Evaluate location, hybrid or on-site requirements, relocation and work-authorization compatibility."
+      anchors:
+        clearly_compatible: 10
+        compatible_with_minor_uncertainty: 7
+        sponsorship_or_permit_needed: 4
+        major_unresolved_constraint: 1
+        incompatible: 0
+
+    start_date_and_opportunity_type:
+      points: 5
+      method: "Compare the stated start date and opportunity type with the search criteria."
+      anchors:
+        clearly_compatible: 5
+        probably_compatible: 4
+        information_not_stated: 2.5
+        weak_fit: 1
+        incompatible: 0
+
+    learning_and_portfolio_value:
+      points: 5
+      method: "Evaluate the opportunity's potential for technical growth, mentorship, meaningful responsibility and portfolio value."
+      anchors:
+        exceptional_value: 5
+        strong_value: 4
+        moderate_value: 3
+        limited_value: 1
+        no_clear_value: 0
+
+evidence_rules:
+  candidate_evidence_source: "CV only"
+
+  evidence_multipliers:
+    direct_cv_evidence: 1.0
+    strong_transferable_evidence: 0.75
+    partial_transferable_evidence: 0.5
+    not_evidenced_in_cv: 0.0
+
+  requirements:
+    - Use explicit CV statements as direct evidence.
+    - Allow transferable experience only when the relationship is explained.
+    - Never invent candidate skills, experience, qualifications or language proficiency.
+    - Describe missing candidate evidence as "not evidenced in the CV".
+    - Do not claim that the candidate lacks a skill merely because it is absent from the CV.
+    - Do not use personal information from outside the configured CV.
+
+unknown_information:
+  job_detail_not_stated:
+    score_fraction_of_affected_points: 0.5
+    lower_confidence: true
+    label_as_unknown: true
+
+  ambiguous_requirement:
+    treat_as_required: false
+    lower_confidence: true
+    explain_ambiguity: true
+
+  search_snippet_only:
+    allow_final_score: false
+    status: "Unverified"
+    require_official_page_before_ranking: true
+
+score_labels:
+  excellent_match:
+    minimum: 90
+    maximum: 100
+
+  strong_match:
+    minimum: 75
+    maximum: 89
+
+  plausible_or_stretch_match:
+    minimum: 60
+    maximum: 74
+
+  weak_match:
+    minimum: 0
+    maximum: 59
+
+confidence:
+  levels:
+    high:
+      description: "Official job information is complete and the CV contains clear evidence for the main requirements."
+
+    medium:
+      description: "Some relevant details are missing or the match depends partly on transferable experience."
+
+    low:
+      description: "Several important job details are unavailable, ambiguous or supported only by weak evidence."
+
+  confidence_is_separate_from_score: true
+
+company_priority:
+  source: "config/company-targets.yaml"
+  use_for_search_order: true
+  show_separately_in_results: true
+  use_as_tiebreaker: true
+  modify_candidate_fit_score: false
+
+output_requirements:
+  include_for_each_job:
+    - Total score out of 100
+    - Score label
+    - Confidence level
+    - Score breakdown by category
+    - Strongest CV evidence
+    - Transferable experience used
+    - Missing or weakly evidenced requirements
+    - Unknown or ambiguous job information
+    - Work-authorization or permit warning
+    - Compensation status
+    - Short explanation of the final score
+
+  sorting:
+    primary: "Total score descending"
+    secondary: "Confidence descending"
+
+  rules:
+    - Category scores must add up to the total score.
+    - Every awarded point must be explainable using the job description, CV or search criteria.
+    - Never allow company reputation or popularity to change the candidate-fit score.
+    - Never hide a major requirement gap behind a high overall score.

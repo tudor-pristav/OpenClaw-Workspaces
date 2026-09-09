@@ -1,0 +1,55 @@
+# Credentials and secrets
+**/.env
+**/.env.*
+!**/.env.example
+**/*.key
+**/*.pem
+**/*.p12
+**/*.pfx
+**/*.jks
+**/*.keystore
+**/id_rsa*
+**/id_ed25519*
+**/.netrc
+**/.npmrc
+**/.pypirc
+**/auth.json
+**/credentials/
+**/secrets*
+**/.aws/
+**/.ssh/
+**/.gnupg/
+
+# OpenClaw-generated state
+**/openclaw-workspace-state.json
+**/.openclaw/
+**/.attested
+**/sessions/
+**/codex-home/
+
+# Private agent data
+**/USER.md
+**/MEMORY.md
+**/TOOLS.md
+**/memory/
+**/state/
+**/runtime/
+**/browser-data/
+**/reports/
+**/*.db
+**/*.sqlite*
+**/*.log
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+**/.idea/
+**/.vscode/
+**/*~
+**/*.swp
+
+# Private candidate configuration
+**/config/CV.md
+**/config/search-criteria.yaml
+**/config/*.local.yaml
+**/config/*.local.yml

@@ -1,0 +1,134 @@
+# Public template only. Copy to search-criteria.yaml and replace the null or
+# example values before running Scout. The destination file is ignored by Git.
+
+candidate:
+  career_stage: null
+  expected_graduation: null
+
+availability:
+  earliest_start: null
+  preferred_start_year: null
+  flexible_within_preferred_year: true
+
+opportunities:
+  included_types:
+    - Internship
+    - Graduate program
+    - Entry-level position
+    - Junior position
+
+internship_duration:
+  any_duration: true
+  include_when_unspecified: true
+
+compensation:
+  include_unpaid: false
+  include_when_unspecified: true
+  require_status_label: true
+  unpaid_label: "Unpaid"
+  unspecified_label: "Compensation not stated"
+
+roles:
+  scope: "Any IT or computer-science-related position"
+  include_any_it_related_role: true
+
+  example_families:
+    - Software engineering
+    - Web, mobile, backend and full-stack development
+    - Machine learning, AI and data
+    - VR, AR, XR and game development
+    - Cloud, DevOps and infrastructure
+    - Cybersecurity
+    - QA and software testing
+    - IT support and systems administration
+    - Networks and databases
+    - Technical consulting
+    - Research engineering
+    - Business and systems analysis
+
+  examples_are_not_exhaustive: true
+
+experience:
+  maximum_required_years: 3
+  include_when_years_not_stated: true
+  preferred_experience_is_not_a_hard_filter: true
+  flag_experience_gaps: true
+
+seniority:
+  excluded_title_terms:
+    - Senior
+    - Staff
+    - Principal
+    - Lead
+    - Manager
+    - Head
+    - Director
+
+  exclude_regardless_of_experience_requirement: true
+
+education:
+  include_when_masters_required: true
+  include_when_masters_preferred: true
+
+  exclude_when_phd_required: true
+  exclude_when_phd_preferred: true
+  exclude_phd_targeted_positions: true
+
+  excluded_phd_terms:
+    - PhD internship
+    - Doctoral researcher
+    - Doctoral candidate
+    - Postdoctoral
+    - Postdoc
+
+  include_if_bachelors_or_masters_is_also_accepted: true
+  flag_qualification_gaps: true
+
+locations:
+  geographic_scope: "Europe"
+  include_all_european_countries: true
+
+  explicitly_included_regions:
+    - European Union
+    - European Economic Area
+    - United Kingdom
+    - Ireland
+    - Switzerland
+
+  open_to_relocation_within_europe: false
+  exclude_roles_based_outside_europe: true
+
+work_arrangement:
+  included:
+    - Hybrid
+    - On-site
+
+  exclude_remote_only: false
+  include_when_unspecified: true
+  unspecified_label: "Work arrangement not stated"
+
+work_authorization:
+  eu_citizen: null
+
+  include_roles_with_uncertain_authorization: true
+  include_roles_requiring_sponsorship: true
+
+  require_authorization_label: true
+  flag_sponsorship_requirement: true
+  flag_permit_requirement: true
+  unknown_label: "Work-authorization requirements not stated"
+
+language_requirements:
+  compare_against_cv: true
+  include_when_required_language_is_missing: true
+  include_when_language_level_is_uncertain: true
+  flag_language_gaps: true
+  never_infer_unlisted_proficiency: true
+
+schedule:
+  included:
+    - Full-time
+
+  exclude_part_time: false
+  include_when_unspecified: true
+  unspecified_label: "Working hours not stated"
